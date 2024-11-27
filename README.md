@@ -36,7 +36,7 @@ sudo yum install sprungg-cli
 ```
 
 ### Windows
-1. Download the installer from the [Releases](https://github.com/olatunde85/sprungg-cli/releases) page.
+1. Download the installer from the [Releases](https://github.com/sprungg/cli.git/releases) page.
 2. Run the installer and follow the instructions.
 3. Alternatively, install via `choco`:
    ```bash
@@ -115,7 +115,7 @@ sprungg-cli watch
 
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/olatunde85/sprungg-cli.git
+git clone https://github.com/sprungg/cli.git
 cd sprungg-cli
 npm install
 ```
