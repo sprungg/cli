@@ -1,0 +1,48 @@
+{
+    "name": "sprungg-cli",
+    "version": "1.0.0",
+    "description": "A CLI tool for interacting with the Sprungg platform",
+    "main": "dist/index.js",
+    "bin": {
+        "sprungg-cli": "dist/index.js"
+    },
+    "scripts": {
+        "start": "ts-node src/index.ts",
+        "build": "tsc",
+        "test": "jest",
+        "lint": "eslint 'src/**/*.ts'",
+        "lint:fix": "eslint 'src/**/*.ts' --fix",
+        "prepublishOnly": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sprungg/cli.git"
+    },
+    "author": "Joshua Olatunde, Johnson Tinuoye",
+    "license": "MIT",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "dependencies": {
+        "axios": "^0.24.0",
+        "chalk": "^4.1.2",
+        "commander": "^9.2.0",
+        "inquirer": "^8.2.6",
+        "simple-git": "^3.27.0"
+    },
+    "devDependencies": {
+        "@types/inquirer": "^9.0.7",
+        "@types/jest": "^27.0.2",
+        "@types/node": "^16.11.7",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.0.0",
+        "eslint": "^8.0.0",
+        "jest": "^27.4.7",
+        "ts-jest": "^27.0.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^4.5.4"
+    },
+    "files": [
+        "dist/**/*"
+    ]
+}
