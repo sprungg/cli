@@ -3,6 +3,7 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import config from './config';
+import git from './git';
 import chalk from 'chalk';
 
 // Path to store session data (can be expanded to use a database or secure store)
@@ -102,10 +103,29 @@ const sessionManager = {
 
   //   sync current branch with remote
   sync: async (): Promise<void> => {
-    console.log('Syncing with remote repository...');
+    // check current session for repo path, then navigate to that path and sync
+    const session: SessionData = sessionManager.initializeSession();
+    if (!session.localFolderPath || !session.branchName) {
+      console.log(chalk.red('No repository path or branch found in session.'));
+      return;
+    }
+    await git.checkoutBranch(session.localFolderPath, session.branchName);
     execSync('git fetch', { stdio: 'inherit' });
-    execSync('git pull', { stdio: 'inherit' });
+    execSync('git pull origin main', { stdio: 'inherit' });
     console.log(chalk.green('Sync completed.'));
+  },
+
+  //  push changes to remote
+  push: async (options: { message: string }): Promise<void> => {
+    const session: SessionData = sessionManager.initializeSession();
+    if (!session.localFolderPath || !session.branchName) {
+      console.log(chalk.red('No repository path or branch found in session.'));
+      return;
+    }
+    await git.checkoutBranch(session.localFolderPath, session.branchName);
+    await git.commitChanges(session.localFolderPath, options.message, session.branchName);
+    console.log(chalk.green('Push completed.'));
+    // to do: update the contribution status in sprungg, then clear the session
   },
 
   // Main function to initialize the session and interact with the user
@@ -157,6 +177,18 @@ const sessionManager = {
         },
       ]);
       editorCommand = answers.editorCommand;
+    }
+
+    // checkout the branch
+    console.log(chalk.green(`Checking out branch: ${session.branchName}`));
+    process.chdir(session.localFolderPath);
+    // create a new branch if it doesn't exist\
+    try {
+      console.log(chalk.green(`Checking out branch: ${session.branchName}`));
+      await git.checkoutBranch(session.localFolderPath, session.branchName);
+    } catch (error) {
+      console.log(chalk.red(`Error checking out branch: ${error}`));
+      return;   
     }
 
     console.log(chalk.green(`Launching ${editorCommand} for the repository: ${session.localFolderPath}`));

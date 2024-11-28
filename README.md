@@ -136,12 +136,22 @@ npx ts-node bin/sprungg-cli.ts set-editor code
 
 Start a coding session
 ```bash
-npx ts-node bin/sprungg-cli.ts start --contribution-id aaaaabc --branch main --repo-url 'https://github.com/sprungg/cli' --local-folder-path /Users/Joshua/sprungg/cli
+npx ts-node bin/sprungg-cli.ts start --contribution-id aaaaabc --branch-name main --repo-url 'https://github.com/sprungg/cli' --local-folder-path /Users/Joshua/sprungg/cli
 ```
 
 You can open an editor if a repository has already been mapped to a local path
 ```bash
 npx ts-node bin/sprungg-cli.ts open-editor --path https://github.com/sprungg/cli
+```
+
+Sync with remote branch
+```bash
+npx ts-node bin/sprungg-cli.ts sync
+```
+
+Push current changes to contribution branch by specifying a commit message
+```bash
+npx ts-node bin/sprungg-cli.ts push --message "update readme with new changed"
 ```
 
 Build the project:

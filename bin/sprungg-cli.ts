@@ -22,7 +22,7 @@ program
   .command('start')
   .description('Start a coding session')
   .requiredOption('--contribution-id <id>', 'Contribution ID')
-  .requiredOption('--branch <name>', 'Branch name')
+  .requiredOption('--branch-name <name>', 'Branch name')
   .requiredOption('--repo-url <url>', 'Repository URL')
   .requiredOption('--local-folder-path <path>', 'Local folder path')
   .action((options) => {
@@ -46,5 +46,13 @@ program
   .command('sync')
   .description('Sync the current branch with the remote repository')
   .action(session.sync);
+
+program
+  .command('push')
+  .description('Push changes to the remote repository')
+  .requiredOption('--message <message>', 'Commit message')
+  .action((options) => {
+    session.push(options);
+  });
 
 program.parse(process.argv);

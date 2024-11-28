@@ -22,6 +22,13 @@ const gitOps = {
     console.log('Changes stashed.');
   },
 
+  async commitChanges(path: string, message: string, targetBranch: string): Promise<void> {
+    await git.cwd(path).add('.');
+    await git.commit(message);
+    await git.push('origin', targetBranch);
+    console.log('Changes committed and pushed.');
+  },
+
   async sync(path: string): Promise<void> {
     await git.cwd(path).fetch();
     await git.rebase(['origin/main']);
