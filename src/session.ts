@@ -5,6 +5,7 @@ import inquirer from 'inquirer';
 import config from './config';
 import git from './git';
 import chalk from 'chalk';
+import { startWebSocketServer } from './websocket';
 
 // Path to store session data (can be expanded to use a database or secure store)
 const sessionFilePath = path.join(__dirname, '../.session.json');
@@ -195,6 +196,9 @@ const sessionManager = {
 
     // Launch the editor
     execSync(`${editorCommand} ${session.localFolderPath}`);
+
+    // Start WebSocket server for this session
+    const wsSession = startWebSocketServer(options.contributionId);
   },
 };
 

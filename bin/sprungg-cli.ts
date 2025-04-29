@@ -5,6 +5,7 @@ import auth from '../src/auth';
 import session from '../src/session';
 import editor from '../src/editor';
 import config from '../src/config';
+import startServer from '../src/server';
 
 const program = new Command();
 
@@ -53,6 +54,15 @@ program
   .requiredOption('--message <message>', 'Commit message')
   .action((options) => {
     session.push(options);
+  });
+
+program
+  .command('serve')
+  .description('Start the local server')
+  .option('-p, --port <number>', 'Port number', '3040')
+  .action((options) => {
+    const port = parseInt(options.port);
+    startServer(port);
   });
 
 program.parse(process.argv);
